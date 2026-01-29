@@ -1,110 +1,157 @@
-# M365 Mail & Groups Drift Toolkit
+Microsoft 365 Shared Mailbox & Distribution Group Management Tool
 
-A lightweight **desktop GUI tool built with PowerShell 7 and WPF** for managing Microsoft 365 / Exchange Online objects in day-to-day IT operations.
+A PowerShell-based GUI tool designed to simplify common Microsoft 365 administrative tasks for support staff who do not work directly with PowerShell.
 
-This tool is designed to simplify and standardize common administrative tasks while remaining **tenant-friendly**, performant, and safe to use in large environments.
+The tool provides a graphical interface for managing shared mailboxes, distribution groups, and calendar permissions, while still relying on official Microsoft modules and APIs under the hood.
 
-The project is part of my personal portfolio and demonstrates practical automation, Exchange Online knowledge, and operational tooling.
+Purpose
 
----
+In many IT support teams, routine Microsoft 365 administration tasks are repetitive but sensitive:
 
-## Overview
+granting access to shared mailboxes
 
-The M365 Mail & Groups Drift Toolkit provides a graphical interface for managing:
+managing distribution group membership
 
-- Mailbox permissions
-- Resource calendar permissions
-- Distribution groups
-- Mail-enabled security groups
-- Dynamic distribution groups (read-only)
+adjusting calendar permissions
 
-All data is loaded **on demand** using **server-side filtering**, avoiding full tenant enumeration and reducing load on Exchange Online.
+These tasks are often handled by a small number of PowerShell-capable administrators, even though the operations themselves are straightforward.
 
----
+This tool was created to:
 
-## Key Features
+reduce manual PowerShell usage for first-line support
 
-### Search (tenant-friendly)
-Search Exchange Online using server-side filters:
-- Shared mailboxes
-- Room mailboxes
-- Equipment mailboxes
-- Distribution groups
-- Mail-enabled security groups
-- Dynamic distribution groups
+standardize common changes
 
-Results are limited per object type to ensure good performance even in large tenants.
+lower the risk of syntax errors
 
----
+log all actions for traceability
 
-### Mailbox permissions
-Supported mailbox types:
-- Shared mailboxes
-- Room mailboxes
-- Equipment mailboxes
+It is intended as an operational support tool, not a replacement for proper RBAC design or administrative oversight.
 
-View and manage:
-- FullAccess
-- SendAs
+Features
 
-Capabilities:
-- Grant permissions to multiple users or groups in one operation
-- Remove selected permissions
-- Supports both user and group trustees
-- Changes are logged locally
+GUI-based interface (WPF)
 
----
+Manage shared mailbox permissions
 
-### Resource calendar permissions (Room / Equipment)
-For room and equipment mailboxes, the tool can display:
-- Calendar folder permissions
-- Access levels (Author, Editor, LimitedDetails, AvailabilityOnly, etc.)
-- Special principals such as Default and Anonymous
+FullAccess
 
-Navigation feature:
-- Double-click a group shown in calendar permissions to open that group directly in the Group view.
+SendAs
 
----
+Manage distribution group membership
 
-### Group management
-Supported group types:
-- Distribution Groups
-- Mail-enabled Security Groups
+Manage calendar permissions
 
-Capabilities:
-- View group members
-- Add members in bulk
-- Remove selected members
+Bulk input support (multiple users at once)
 
-Input accepts:
-- Email address
-- User Principal Name (UPN)
-- Mail nickname / alias
+Action logging to local log files
 
----
+Uses official Microsoft 365 PowerShell modules
 
-### Dynamic distribution groups
-Read-only view:
-- Displays RecipientFilter
-- Displays RecipientContainer
+Example Workflows
+Grant FullAccess to a Shared Mailbox
 
-Dynamic group membership cannot be modified manually by design.
+Enter the shared mailbox address
 
----
+Paste one or more user UPNs (semicolon-separated)
 
-## Bulk input format
+Select Grant FullAccess
 
-When adding users or groups, multiple identities can be pasted at once.
+Execute the action
 
-Accepted formats:
-- Email address
-- UPN
-- Alias (mail nickname, without @)
+Result is applied and logged
 
-Supported separators:
-- Comma
-- Semicolon
-- Whitespace
-- New lines
+Add Users to a Distribution Group
 
-Example:
+Enter the distribution group address
+
+Paste user UPNs
+
+Choose Add members
+
+Execute
+
+Modify Calendar Permissions
+
+Select mailbox calendar
+
+Choose permission level
+
+Apply changes
+
+All actions are logged for later review.
+
+Prerequisites
+
+PowerShell 7.x
+
+Microsoft 365 tenant access
+
+Required PowerShell modules:
+
+ExchangeOnlineManagement
+
+Appropriate Exchange RBAC roles, depending on the operation:
+
+Exchange Administrator (or equivalent scoped role)
+
+Internet connectivity to Microsoft 365 services
+
+Security & Safety Notes
+
+The tool does not store credentials
+
+Authentication is handled via standard Microsoft sign-in
+
+Actions are executed in the context of the signed-in user
+
+No secrets or tokens are written to disk
+
+All changes should be tested in a non-production environment before broad use
+
+Recommended practice:
+Use least-privileged roles and restrict access to this tool to trusted support staff.
+
+Logging
+
+All actions are logged locally to the logs/ directory
+
+Each run generates a timestamped log file
+
+Logs are intended for operational traceability and troubleshooting
+
+⚠️ The logs/ directory should not be committed to version control.
+
+Intended Audience
+
+IT support staff
+
+Microsoft 365 administrators
+
+Operations teams in need of safe, repeatable workflows
+
+This tool is not intended for end users.
+
+Limitations
+
+No role enforcement inside the tool itself (relies on tenant RBAC)
+
+No approval workflow
+
+No undo/rollback functionality
+
+Designed for interactive use, not automation pipelines
+
+Screenshots
+
+<img width="1691" height="996" alt="image" src="https://github.com/user-attachments/assets/e6103e6b-0fa4-4d2c-8f24-78e74e856f42" />
+
+
+Disclaimer
+
+This tool is provided as-is.
+Always validate changes in a test environment before applying them in production.
+
+License
+
+MIT Licensepo
